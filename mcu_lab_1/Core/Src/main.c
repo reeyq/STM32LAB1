@@ -91,10 +91,35 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  int led_red_status = 1;
+  int count_on = 0;
+  int count_off = 0;
   while (1)
   {
     /* USER CODE END WHILE */
-
+	  if(led_red_status == 1)
+	  {
+		  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
+		  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, GPIO_PIN_SET);
+		  count_on = count_on + 1;
+		  if(count_on==2)
+		  {
+			  led_red_status = 0;
+			  count_on = 0;
+		  }
+	  }
+	  else
+	  {
+		  HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_SET);
+		  HAL_GPIO_WritePin(LED_YELLOW_GPIO_Port, LED_YELLOW_Pin, GPIO_PIN_RESET);
+		  count_off = count_off+1;
+	  		  if(count_off==2)
+	  		  {
+	  			  led_red_status = 1;
+	  			  count_off = 0;
+	  		  }
+	   }
+	  HAL_Delay(1000);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
